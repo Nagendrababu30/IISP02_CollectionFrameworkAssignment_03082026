@@ -1,5 +1,6 @@
 package com.iispl.main;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -59,6 +60,22 @@ public class ChequeProcessingApplication {
 		}else {
 			System.err.println("Cheque Not Found");
 		}
+	}
+	
+	private void searchAccount(String accountNnumber) {
+		
+	}
+	
+	private void updateBalance(String accountNnumber, BigDecimal amount) {
+		
+	}
+	
+	private void displayAllAccounts() {
+		
+	}
+	
+	private void deleteAccount(String accountNumber) {
+		
 	}
 	
 
