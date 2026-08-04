@@ -27,17 +27,14 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean deleteAccount(String accountNumber) {
-		if(accountMap.containsKey(accountNumber)) {
-			accountMap.remove(accountNumber);
-			return true;
-		}
+		// TODO Auto-generated method stub
 		return false;
+		
 	}
 
 	@Override
 	public Map<String, Account> displayAllAccount() {
-		// TODO Auto-generated method stub
-		return null;
+		return accountMap;
 	}
 
 	@Override
