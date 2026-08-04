@@ -141,10 +141,15 @@ public class ChequeProcessingApplication {
 		
 	}
 	
-	private static void updateBalance(String accountNnumber, BigDecimal amount) {
+	private void updateBalance(String accountNnumber, BigDecimal amount) {
 		
-	}
-	
+		if(accountService.updateBalance(accountNnumber, amount)) {
+			System.out.println("balance updated successfully");
+		}
+		else {
+			System.out.println("balance not updated");
+		}
+
 	private static void displayAllAccounts() {
 		Map<String,Account> accountMap =accountService.displayAllAccount();
 		System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
