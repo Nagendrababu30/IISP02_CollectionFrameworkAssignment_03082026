@@ -75,6 +75,14 @@ public class ChequeProcessingApplication {
 	}
 	
 	private void searchAccount(String accountNnumber) {
+		try {
+			Account account=accountService.searchAccount(accountNnumber);
+			System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
+			System.out.println(account.getAccountNumber()+"\t\t"+account.getAccountBalance()+"\t\t"+account.getAccountStatus());
+		} catch (AccountNotFoundException e) {
+			 
+			e.printStackTrace();
+		}
 		
 	}
 	
