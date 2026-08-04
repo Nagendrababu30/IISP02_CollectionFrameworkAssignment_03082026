@@ -1,6 +1,9 @@
 package com.iispl.main;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.exceptions.DuplicateChequeException;
@@ -15,6 +18,7 @@ public class ChequeProcessingApplication {
 	
 	static AccountService accountService = new AccountServiceImpl();
 	static ChequeService chequeService = new ChequeServiceImpl();
+	static Scanner scanner=new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
@@ -27,6 +31,33 @@ public class ChequeProcessingApplication {
 			exception.getMessage();
 		}
 		
+	}
+	
+	private void displayProcessedCheques() {
+		Set<Cheque> processedcheques=chequeService.displayProcessedCheques();
+		for(Cheque cheque:processedcheques) {
+			System.out.println(cheque);
+		}
+	}
+	
+	private void getBranchReport() {
+		Map<String,Integer> branchreports=chequeService.getBranchReport();
+		
+		System.out.println("Branch name\t\t Processed_Cheques");
+		
+		for(Map.Entry<String,Integer> branch:branchreports.entrySet()) {
+			System.out.println(branch.getKey()+"\t\t"+branch.getValue());
+		}
+	}
+	
+	private void removeProcessedCheque() {
+		System.out.println("Enter Cheque Number : ");
+		boolean isdeleted=chequeService.removeProcessedCheque(scanner.nextLine());
+		if(isdeleted) {
+			System.out.println("Removed cheque from processed cheque List");
+		}else {
+			System.err.println("Cheque Not Found");
+		}
 	}
 	
 }

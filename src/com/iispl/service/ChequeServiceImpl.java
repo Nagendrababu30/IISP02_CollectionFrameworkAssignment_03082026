@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
@@ -87,14 +87,23 @@ public class ChequeServiceImpl implements ChequeService {
 	}
 
 	@Override
-	public TreeSet<Cheque> displayProcessedCheques() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Cheque> displayProcessedCheques() {
+		return chequeSet;
 	}
 
 	@Override
-	public boolean removeProcessedCheque(Cheque cheque) {
-		// TODO Auto-generated method stub
+	public boolean removeProcessedCheque(String chequeNumber) {
+		
+		Iterator<Cheque> iterator=chequeSet.iterator();
+		
+		while(iterator.hasNext()) {
+			Cheque cheque=iterator.next();
+			if(cheque.getAccountNumber().equals(chequeNumber)) {
+				chequeSet.remove(cheque);
+				return true;
+			}
+			
+		}
 		return false;
 	}
 
@@ -102,14 +111,16 @@ public class ChequeServiceImpl implements ChequeService {
 	public void updateBranchChequeCount(String branchName) {
 		branchCountMap = new HashMap<String, Integer>();
 		
-		// TODO Auto-generated method stub
-		
+		if(branchCountMap.containsKey(branchName)) {
+			branchCountMap.put(branchName, branchCountMap.get(branchName)+1);
+			return;
+		}
+		branchCountMap.put(branchName,1);
 	}
 
 	@Override
 	public Map<String, Integer> getBranchReport() {
-		// TODO Auto-generated method stub
-		return null;
+		return branchCountMap;
 	}
 
 	@Override
