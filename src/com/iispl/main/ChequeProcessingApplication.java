@@ -2,6 +2,7 @@ package com.iispl.main;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 import com.iispl.exceptions.AccountNotFoundException;
@@ -17,6 +18,7 @@ public class ChequeProcessingApplication {
 	
 	static AccountService accountService = new AccountServiceImpl();
 	static ChequeService chequeService = new ChequeServiceImpl();
+	static Scanner scanner=new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
@@ -48,4 +50,16 @@ public class ChequeProcessingApplication {
 		}
 	}
 	
+
+	private void removeProcessedCheque() {
+		System.out.println("Enter Cheque Number : ");
+		boolean isdeleted=chequeService.removeProcessedCheque(scanner.nextLine());
+		if(isdeleted) {
+			System.out.println("Removed cheque from processed cheque List");
+		}else {
+			System.err.println("Cheque Not Found");
+		}
+	}
+	
+
 }
