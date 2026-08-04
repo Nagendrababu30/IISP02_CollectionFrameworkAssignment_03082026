@@ -9,6 +9,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.repository.ChequeRepository;
@@ -26,12 +27,18 @@ public class ChequeServiceImpl implements ChequeService {
 	@Override
 	public void validateCheques(List<Cheque> chequeList) {
 		chequeList.forEach(cheque -> {
-			Account account = accountService.searchAccount(cheque.getAccountNumber());
+			Account account = null;
+			try {
+				account = accountService.searchAccount(cheque.getAccountNumber());
+			} catch (AccountNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
 			accountService.validateAccount(account);
 			
 			
 		});
-		// TODO Auto-generated method stub
+		 
 		
 	}
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.model.Account;
 import com.iispl.repository.AccountRepository;
 
@@ -14,14 +15,19 @@ public class AccountServiceImpl implements AccountService {
 	AccountRepository accountRepository = new AccountRepository();
 
 	@Override
-	public Account searchAccount(String accountNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account searchAccount(String accountNumber) throws AccountNotFoundException {
+	    if( accountMap.containsKey(accountNumber)) {
+	    	 
+	    	return  accountMap.get(accountNumber);
+	    }
+	    else {
+	    	 throw new AccountNotFoundException();
+	    }
 	}
 
 	@Override
 	public boolean updateBalance(String accountNumber, BigDecimal amount) {
-		// TODO Auto-generated method stub
+		 
 		return false;
 	}
 
