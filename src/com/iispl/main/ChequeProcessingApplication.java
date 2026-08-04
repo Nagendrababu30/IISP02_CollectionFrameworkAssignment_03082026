@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.Set;
 
 import com.iispl.exceptions.AccountNotFoundException;
-import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.service.AccountService;
@@ -18,7 +17,7 @@ import com.iispl.service.ChequeServiceImpl;
 public class ChequeProcessingApplication {
 	
 	static AccountService accountService = new AccountServiceImpl();
-	static ChequeService chequeService = new ChequeServiceImpl();
+	static ChequeService chequeService = null;
 	static Scanner scanner=new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -26,12 +25,10 @@ public class ChequeProcessingApplication {
 	    System.out.println("========== Bank Management System =========="+"\n");
 		List<Account> accountList = accountService.getAllAccounts();
 		accountService.loadAllAccounts(accountList);
+		chequeService = new ChequeServiceImpl(accountService);
 		List<Cheque> chequeList = chequeService.getAllCheques();
-		try {
-			chequeService.validateCheques(chequeList);
-		}catch(DuplicateChequeException exception) {
-			exception.getMessage();
-		}
+		chequeService.validateCheques(chequeList);
+		
 		
 		
 		do {
@@ -125,7 +122,9 @@ public class ChequeProcessingApplication {
 		System.out.println("Branch name\t\t Processed_Cheques");
 		
 		for(Map.Entry<String,Integer> branch:branchreports.entrySet()) {
-			System.out.println(branch.getKey()+"\t\t"+branch.getValue());
+			if(branch.getKey() != null && branch.getKey() != "") {
+				System.out.println(branch.getKey()+"\t\t"+branch.getValue());
+			}
 		}
 	}
 	

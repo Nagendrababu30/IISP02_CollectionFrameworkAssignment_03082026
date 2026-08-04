@@ -9,11 +9,11 @@ import com.iispl.model.Cheque;
 
 public interface ChequeService {
 
-	public void validateCheques(List<Cheque> chequeList) throws DuplicateChequeException;
+	public void validateCheques(List<Cheque> chequeList);
 	
 	public List<Cheque> getAllCheques();
 	
-	public boolean addChequeNumber(String chequeNumber);
+	public boolean addChequeNumber(String chequeNumber) throws DuplicateChequeException;
 	
 //	--------------------------------------------
 
