@@ -20,7 +20,7 @@ public interface ChequeService {
 	
 	public Set<Cheque> displayProcessedCheques();
 	
-	public boolean removeProcessedCheque(Cheque cheque);
+	public boolean removeProcessedCheque(String chequeNumber);
 	
 	public void updateBranchChequeCount(String branchName);
 	

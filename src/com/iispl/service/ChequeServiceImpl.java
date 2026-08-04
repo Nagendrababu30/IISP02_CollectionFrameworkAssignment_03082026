@@ -2,6 +2,7 @@ package com.iispl.service;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -57,8 +58,18 @@ public class ChequeServiceImpl implements ChequeService {
 	}
 
 	@Override
-	public boolean removeProcessedCheque(Cheque cheque) {
-		// TODO Auto-generated method stub
+	public boolean removeProcessedCheque(String chequeNumber) {
+		
+		Iterator<Cheque> iterator=chequeSet.iterator();
+		
+		while(iterator.hasNext()) {
+			Cheque cheque=iterator.next();
+			if(cheque.getAccountNumber().equals(chequeNumber)) {
+				chequeSet.remove(cheque);
+				return true;
+			}
+			
+		}
 		return false;
 	}
 
