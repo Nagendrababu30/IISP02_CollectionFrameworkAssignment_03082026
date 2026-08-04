@@ -1,6 +1,7 @@
 package com.iispl.main;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.iispl.model.Account;
@@ -28,6 +29,16 @@ public class ChequeProcessingApplication {
 		Set<Cheque> processedcheques=chequeService.displayProcessedCheques();
 		for(Cheque cheque:processedcheques) {
 			System.out.println(cheque);
+		}
+	}
+	
+	private void getBranchReport() {
+		Map<String,Integer> branchreports=chequeService.getBranchReport();
+		
+		System.out.println("Branch name\t\t Processed_Cheques");
+		
+		for(Map.Entry<String,Integer> branch:branchreports.entrySet()) {
+			System.out.println(branch.getKey()+"\t\t"+branch.getValue());
 		}
 	}
 	

@@ -66,14 +66,16 @@ public class ChequeServiceImpl implements ChequeService {
 	public void updateBranchChequeCount(String branchName) {
 		branchCountMap = new HashMap<String, Integer>();
 		
-		// TODO Auto-generated method stub
-		
+		if(branchCountMap.containsKey(branchName)) {
+			branchCountMap.put(branchName, branchCountMap.get(branchName)+1);
+			return;
+		}
+		branchCountMap.put(branchName,1);
 	}
 
 	@Override
 	public Map<String, Integer> getBranchReport() {
-		// TODO Auto-generated method stub
-		return null;
+		return branchCountMap;
 	}
 
 	@Override
