@@ -1,6 +1,7 @@
 package com.iispl.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +9,23 @@ import java.util.Map;
 import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.model.Account;
 import com.iispl.repository.AccountRepository;
+import com.iispl.validations.AccountNumberValidation;
+import com.iispl.validations.AccountStatusValidation;
+import com.iispl.validations.AccountValidator;
 
 public class AccountServiceImpl implements AccountService {
 	
 	Map<String, Account> accountMap = new HashMap<String, Account>();
 	AccountRepository accountRepository = new AccountRepository();
+	List<AccountValidator> validationRules = null;
+	
+	public AccountServiceImpl() {
+		validationRules = new ArrayList<AccountValidator>();
+		
+		validationRules.add(new AccountNumberValidation());
+		validationRules.add(new AccountStatusValidation());
+		
+	}
 
 	@Override
 	public Account searchAccount(String accountNumber) throws AccountNotFoundException {
@@ -44,10 +57,21 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void validateAccount(Account account) {
-		// TODO Auto-generated method stub
+	public int validateAccount(Account account) {
 		
-	}
+		for(AccountValidator rule : validationRules) {
+			if(!rule.validate(account)) {
+				if(rule instanceof AccountNumberValidation) {
+					return 1;
+				} else if(rule instanceof AccountStatusValidation) {
+					return 2;
+				}
+			}
+		}
+		
+		return 0;
+		
+	} 
 
 	@Override
 	public void addAccount(Account account) {
@@ -57,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	public void loadAllAccounts(List<Account> accountList) {
 		accountList.forEach(account -> {
-			accountMap.put(account.getAccountNumber(), account);
+			addAccount(account);
 		});
 	}
 

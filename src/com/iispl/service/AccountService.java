@@ -9,7 +9,7 @@ import com.iispl.model.Account;
 
 public interface AccountService {
 	
-	public void validateAccount(Account account);
+	public int validateAccount(Account account);
 	
 	public List<Account> getAllAccounts();
 	

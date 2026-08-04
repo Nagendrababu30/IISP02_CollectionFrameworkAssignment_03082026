@@ -6,7 +6,9 @@ public class ChequeNumberValidation implements ChequeValidator {
 
 	@Override
 	public boolean validate(Cheque cheque) {
-		// TODO Auto-generated method stub
+		
+		if(cheque.getChequeNumber().startsWith("CHQ"))
+			return true;
 		return false;
 	}
 

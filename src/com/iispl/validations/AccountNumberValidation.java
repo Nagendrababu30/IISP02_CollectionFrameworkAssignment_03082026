@@ -6,7 +6,9 @@ public class AccountNumberValidation implements AccountValidator{
 
 	@Override
 	public boolean validate(Account account) {
-		// TODO Auto-generated method stub
+		if(account.getAccountNumber().startsWith("ACC")) {
+			return true;
+		}
 		return false;
 	}
 
