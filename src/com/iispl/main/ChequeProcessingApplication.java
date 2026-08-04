@@ -1,11 +1,11 @@
 package com.iispl.main;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
@@ -35,6 +35,13 @@ public class ChequeProcessingApplication {
 	
 	private void printMenu() {
 		System.out.println();
+	}
+	
+	private BigDecimal getAmount() {
+		System.out.println("Enter amount : ");
+		BigDecimal amount=scanner.nextBigDecimal();
+		scanner.nextLine();
+		return amount;
 	}
 	
 	private String getchequNumber() {
