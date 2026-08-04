@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void addAccount(Account account) {
 		// TODO Auto-generated method stub
+		accountMap.put(account.getAccountNumber(), account);
 		
 	}
 	
