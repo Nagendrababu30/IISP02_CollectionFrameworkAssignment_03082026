@@ -59,6 +59,12 @@ public class Account {
 		return Objects.equals(accountBalance, other.accountBalance)
 				&& Objects.equals(accountNumber, other.accountNumber) && accountStatus == other.accountStatus;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [accountNumber=" + accountNumber + ", accountBalance=" + accountBalance + ", accountStatus="
+				+ accountStatus + "]";
+	}
 	
 	
 

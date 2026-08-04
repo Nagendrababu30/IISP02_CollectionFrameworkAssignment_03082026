@@ -92,6 +92,13 @@ public class Cheque {
 				&& Objects.equals(chequeAmount, other.chequeAmount) && Objects.equals(chequeDate, other.chequeDate)
 				&& Objects.equals(chequeNumber, other.chequeNumber) && chequeStatus == other.chequeStatus;
 	}
+
+	@Override
+	public String toString() {
+		return "Cheque [chequeNumber=" + chequeNumber + ", accountNumber=" + accountNumber + ", chequeAmount="
+				+ chequeAmount + ", chequeDate=" + chequeDate + ", branchName=" + branchName + ", chequeStatus="
+				+ chequeStatus + "]";
+	}
 	
 	
 
