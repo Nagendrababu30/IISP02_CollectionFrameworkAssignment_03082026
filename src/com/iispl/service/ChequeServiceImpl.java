@@ -14,11 +14,14 @@ import java.util.TreeSet;
 import com.iispl.enums.ChequeStatus;
 import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.exceptions.DuplicateChequeException;
+import com.iispl.exceptions.InsufficientFundsException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.repository.ChequeRepository;
+import com.iispl.validations.ChequeInvalidAmountValidation;
 import com.iispl.validations.ChequeNumberValidation;
 import com.iispl.validations.ChequeValidator;
+import com.iispl.validations.InsufficientBalanceValidation;
 
 public class ChequeServiceImpl implements ChequeService {
 	
@@ -34,6 +37,8 @@ public class ChequeServiceImpl implements ChequeService {
     	validationRules = new ArrayList<ChequeValidator>();
     	
     	validationRules.add(new ChequeNumberValidation());
+    	validationRules.add(new ChequeInvalidAmountValidation());
+    	validationRules.add(new InsufficientBalanceValidation());
     }
 
 	@Override
@@ -51,6 +56,8 @@ public class ChequeServiceImpl implements ChequeService {
 						for(ChequeValidator rule : validationRules) {
 							if(!rule.validate(cheque)) {
 								if(rule instanceof ChequeNumberValidation) {
+									cheque.setChequeStatus(ChequeStatus.REJECTED_INVALID_CHEQUE_NUMBER);
+								} else if(rule instanceof ChequeInvalidAmountValidation) {
 									cheque.setChequeStatus(ChequeStatus.REJECTED_CHEQUE_AMOUNT_INVALID);
 								}
 							} else {
@@ -65,7 +72,7 @@ public class ChequeServiceImpl implements ChequeService {
 						
 					}
 				} else if(errorCode == 1) {
-					cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_NOT_FOUND);
+					cheque.setChequeStatus(ChequeStatus.REJECTED_INVALID_ACCOUNT_NUMBER);
 				} else {
 					cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_INACTIVE);
 				}
@@ -73,6 +80,8 @@ public class ChequeServiceImpl implements ChequeService {
 			} catch(AccountNotFoundException exception) {
 				cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_NOT_FOUND);
 				exception.getMessage();
+			} catch(InsufficientFundsException exception) {
+				cheque.setChequeStatus(ChequeStatus.REJECTED_INSUFFICIENT_FUNDS);
 			}
 			
 			chequeSet.add(cheque);
