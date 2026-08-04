@@ -1,6 +1,7 @@
 package com.iispl.main;
 
 import java.util.List;
+import java.util.Set;
 
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
@@ -21,6 +22,13 @@ public class ChequeProcessingApplication {
 		List<Cheque> chequeList = chequeService.getAllCheques();
 		chequeService.validateCheques(chequeList);
 		
+	}
+	
+	private void displayProcessedCheques() {
+		Set<Cheque> processedcheques=chequeService.displayProcessedCheques();
+		for(Cheque cheque:processedcheques) {
+			System.out.println(cheque);
+		}
 	}
 	
 }

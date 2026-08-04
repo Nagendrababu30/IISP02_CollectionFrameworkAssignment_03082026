@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,6 +29,7 @@ public class ChequeServiceImpl implements ChequeService {
 			accountService.validateAccount(account);
 			
 			
+			
 		});
 		// TODO Auto-generated method stub
 		
@@ -52,9 +52,8 @@ public class ChequeServiceImpl implements ChequeService {
 	}
 
 	@Override
-	public TreeSet<Cheque> displayProcessedCheques() {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<Cheque> displayProcessedCheques() {
+		return chequeSet;
 	}
 
 	@Override
