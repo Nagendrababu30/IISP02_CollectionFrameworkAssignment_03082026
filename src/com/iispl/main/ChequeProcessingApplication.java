@@ -85,10 +85,18 @@ public class ChequeProcessingApplication {
 		System.out.println();
 	}
 	
+	private static BigDecimal getAmount() {
+		System.out.println("Enter amount : ");
+		BigDecimal amount=scanner.nextBigDecimal();
+		scanner.nextLine();
+		return amount;
+	}
+	
 	private static String getChequeNumber() {
 		System.out.println("Enter Cheque Number");
 		return scanner.nextLine();
 	}
+	
 	private static String getAccountNumber() {
 		System.out.println("Enter Account Number");
 		return scanner.nextLine();
@@ -138,10 +146,22 @@ public class ChequeProcessingApplication {
 	}
 	
 	private static void displayAllAccounts() {
-		
+		Map<String,Account> accountMap =accountService.displayAllAccount();
+		System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
+		accountMap.forEach((accountNumber,account)->{
+			System.out.println(account.getAccountNumber() + "\t\t"+ account.getAccountBalance() + "\t\t"+account.getAccountStatus());
+		});
+
 	}
 	
 	private static void deleteAccount(String accountNumber) {
+		boolean isDeleted = accountService.deleteAccount(accountNumber);
+	    if (isDeleted) {
+	        System.out.println("Account deleted successfully.");
+	    } else {
+	        System.out.println("Account not found.");
+	    }
+		
 		
 	}
 	
