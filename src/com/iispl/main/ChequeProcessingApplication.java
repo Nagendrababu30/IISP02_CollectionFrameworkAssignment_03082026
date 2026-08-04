@@ -37,7 +37,7 @@ public class ChequeProcessingApplication {
 		System.out.println();
 	}
 	
-	private BigDecimal getAmount() {
+	private static BigDecimal getAmount() {
 		System.out.println("Enter amount : ");
 		BigDecimal amount=scanner.nextBigDecimal();
 		scanner.nextLine();
