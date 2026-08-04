@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.model.Account;
 
 public interface AccountService {
@@ -12,7 +13,7 @@ public interface AccountService {
 	
 	public List<Account> getAllAccounts();
 	
-	public Account searchAccount(String accountNumber);
+	public Account searchAccount(String accountNumber) throws AccountNotFoundException;
 	
 	public boolean updateBalance(String accountNumber, BigDecimal amount);
 	
