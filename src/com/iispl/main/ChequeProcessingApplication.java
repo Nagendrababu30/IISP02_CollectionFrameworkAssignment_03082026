@@ -2,6 +2,8 @@ package com.iispl.main;
 
 import java.util.List;
 
+import com.iispl.exceptions.AccountNotFoundException;
+import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.service.AccountService;
@@ -19,7 +21,11 @@ public class ChequeProcessingApplication {
 		List<Account> accountList = accountService.getAllAccounts();
 		accountService.loadAllAccounts(accountList);
 		List<Cheque> chequeList = chequeService.getAllCheques();
+		try {
 		chequeService.validateCheques(chequeList);
+		}catch(DuplicateChequeException exception) {
+			exception.getMessage();
+		}
 		
 	}
 	
