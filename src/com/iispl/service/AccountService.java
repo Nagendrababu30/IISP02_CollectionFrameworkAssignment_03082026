@@ -8,8 +8,8 @@ import com.iispl.model.Account;
 
 public interface AccountService {
 	
-	public void validateAccounts(List<Account> accountList);
-
+	public void validateAccount(Account account);
+	
 	public List<Account> getAllAccounts();
 	
 	public Account searchAccount(String accountNumber);
@@ -19,5 +19,9 @@ public interface AccountService {
 	public boolean deleteAccount(String accountNumber);
 	
 	public Map<String, Account> displayAllAccount();
+	
+	public void addAccount(Account account);
+	
+	public void loadAllAccounts(List<Account> accountList);
 	
 }

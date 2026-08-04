@@ -12,12 +12,6 @@ public class AccountServiceImpl implements AccountService {
 	
 	Map<String, Account> accountMap = new HashMap<String, Account>();
 	AccountRepository accountRepository = new AccountRepository();
-	
-	@Override
-	public List<Account> getAllAccounts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Account searchAccount(String accountNumber) {
@@ -44,9 +38,27 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void validateAccounts(List<Account> accountList) {
+	public void validateAccount(Account account) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void addAccount(Account account) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void loadAllAccounts(List<Account> accountList) {
+		accountList.forEach(account -> {
+			accountMap.put(account.getAccountNumber(), account);
+		});
+	}
+
+	@Override
+	public List<Account> getAllAccounts() {
+		return AccountRepository.getAccountList();
+	}
+
 
 }

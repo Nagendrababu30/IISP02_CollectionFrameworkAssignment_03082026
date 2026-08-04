@@ -9,6 +9,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.repository.ChequeRepository;
 
@@ -19,17 +20,19 @@ public class ChequeServiceImpl implements ChequeService {
     Set<String> chequeNumberSet = null;
     Map<String, Integer> branchCountMap = null;
     Queue<Cheque> chequeQueue = null;
+    AccountService accountService = new AccountServiceImpl();
+//    List<E>
 
 	@Override
 	public void validateCheques(List<Cheque> chequeList) {
+		chequeList.forEach(cheque -> {
+			Account account = accountService.searchAccount(cheque.getAccountNumber());
+			accountService.validateAccount(account);
+			
+			
+		});
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<Cheque> getAllCheques() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -61,19 +64,22 @@ public class ChequeServiceImpl implements ChequeService {
 	}
 
 	@Override
-	public void addChequeToQueue(Cheque cheque) {
-		chequeQueue = new PriorityQueue<Cheque>();
+	public void updateBranchChequeCount(String branchName) {
+		branchCountMap = new HashMap<String, Integer>();
 		
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateBranchChequeCount(String branchName) {
-		branchCountMap = new HashMap<String, Integer>();
-		
+	public Map<String, Integer> getBranchReport() {
 		// TODO Auto-generated method stub
-		
+		return null;
+	}
+
+	@Override
+	public List<Cheque> getAllCheques() {
+		return ChequeRepository.getChequeList();
 	}
 
 }
