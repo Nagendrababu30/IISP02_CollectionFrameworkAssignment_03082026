@@ -22,7 +22,7 @@ public class ChequeProcessingApplication {
 		accountService.loadAllAccounts(accountList);
 		List<Cheque> chequeList = chequeService.getAllCheques();
 		try {
-		chequeService.validateCheques(chequeList);
+			chequeService.validateCheques(chequeList);
 		}catch(DuplicateChequeException exception) {
 			exception.getMessage();
 		}

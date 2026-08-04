@@ -39,15 +39,15 @@ public class ChequeServiceImpl implements ChequeService {
 	@Override
 	public void validateCheques(List<Cheque> chequeList) throws DuplicateChequeException {
 		for(Cheque cheque : chequeList) {
-			Account account = accountService.searchAccount(cheque.getAccountNumber());
 
-//			try {
+			try {
+				Account account = accountService.searchAccount(cheque.getAccountNumber());
 				int errorCode = accountService.validateAccount(account);
 				
 				if(errorCode == 0) {
 					if(addChequeNumber(cheque.getChequeNumber())) {
 						
-						validationRules.forEach(rule -> {
+						for(ChequeValidator rule : validationRules) {
 							if(!rule.validate(cheque)) {
 								if(rule instanceof ChequeNumberValidation) {
 									cheque.setChequeStatus(ChequeStatus.REJECTED_CHEQUE_AMOUNT_INVALID);
@@ -55,10 +55,11 @@ public class ChequeServiceImpl implements ChequeService {
 							} else {
 								cheque.setChequeStatus(ChequeStatus.ACCEPTED);
 							}
-						});
+						}
 						
 					} else {
 						
+						cheque.setChequeStatus(ChequeStatus.REJECTED_DUPLICATE_CHEQUE_NUMBER);
 						throw new DuplicateChequeException();
 						
 					}
@@ -68,10 +69,12 @@ public class ChequeServiceImpl implements ChequeService {
 					cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_INACTIVE);
 				}
 				
-				chequeSet.add(cheque);
-//			} catch(AccountNotFoundException exception) {
-//				exception.getMessage();
-//			}
+			} catch(AccountNotFoundException exception) {
+				cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_NOT_FOUND);
+				exception.getMessage();
+			}
+			
+			chequeSet.add(cheque);
 				
 		}
 		
