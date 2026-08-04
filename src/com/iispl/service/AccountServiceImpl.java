@@ -40,8 +40,14 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean updateBalance(String accountNumber, BigDecimal amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if( accountMap.containsKey(accountNumber)) {
+			accountMap.get(accountNumber).setAccountBalance(amount);
+			return true;
+		}
+		else {
+			
+			return false;
+		}
 	}
 
 	@Override
