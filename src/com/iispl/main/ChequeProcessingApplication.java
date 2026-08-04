@@ -50,6 +50,7 @@ public class ChequeProcessingApplication {
 		}
 	}
 	
+
 	private void removeProcessedCheque() {
 		System.out.println("Enter Cheque Number : ");
 		boolean isdeleted=chequeService.removeProcessedCheque(scanner.nextLine());
@@ -60,4 +61,5 @@ public class ChequeProcessingApplication {
 		}
 	}
 	
+
 }

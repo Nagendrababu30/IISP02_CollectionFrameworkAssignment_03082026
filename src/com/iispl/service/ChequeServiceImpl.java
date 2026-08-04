@@ -40,6 +40,7 @@ public class ChequeServiceImpl implements ChequeService {
 	public void validateCheques(List<Cheque> chequeList) throws DuplicateChequeException {
 		for(Cheque cheque : chequeList) {
 
+
 			try {
 				Account account = accountService.searchAccount(cheque.getAccountNumber());
 				int errorCode = accountService.validateAccount(account);

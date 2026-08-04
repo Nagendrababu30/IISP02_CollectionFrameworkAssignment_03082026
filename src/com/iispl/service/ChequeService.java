@@ -16,6 +16,7 @@ public interface ChequeService {
 	public boolean addChequeNumber(String chequeNumber);
 	
 //	--------------------------------------------
+
 	
 	public Set<Cheque> displayProcessedCheques();
 	
