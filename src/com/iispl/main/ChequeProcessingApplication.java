@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.iispl.exceptions.AccountNotFoundException;
 import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
@@ -36,6 +35,13 @@ public class ChequeProcessingApplication {
 	
 	private void printMenu() {
 		System.out.println();
+	}
+	
+	private static BigDecimal getAmount() {
+		System.out.println("Enter amount : ");
+		BigDecimal amount=scanner.nextBigDecimal();
+		scanner.nextLine();
+		return amount;
 	}
 	
 	private String getchequNumber() {
@@ -96,12 +102,17 @@ public class ChequeProcessingApplication {
 		accountMap.forEach((accountNumber,account)->{
 			System.out.println(account.getAccountNumber() + "\t\t"+ account.getAccountBalance() + "\t\t"+account.getAccountStatus());
 		});
-		
-		
-		
+
 	}
 	
 	private void deleteAccount(String accountNumber) {
+		boolean isDeleted = accountService.deleteAccount(accountNumber);
+	    if (isDeleted) {
+	        System.out.println("Account deleted successfully.");
+	    } else {
+	        System.out.println("Account not found.");
+	    }
+		
 		
 	}
 	
