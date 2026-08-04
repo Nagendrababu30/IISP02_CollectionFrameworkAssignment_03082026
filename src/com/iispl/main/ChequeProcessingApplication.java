@@ -97,7 +97,12 @@ public class ChequeProcessingApplication {
 	}
 	
 	private void displayAllAccounts() {
-			
+		Map<String,Account> accountMap =accountService.displayAllAccount();
+		System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
+		accountMap.forEach((accountNumber,account)->{
+			System.out.println(account.getAccountNumber() + "\t\t"+ account.getAccountBalance() + "\t\t"+account.getAccountStatus());
+		});
+
 	}
 	
 	private void deleteAccount(String accountNumber) {
