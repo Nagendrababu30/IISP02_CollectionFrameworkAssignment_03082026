@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Cheque;
 
 public interface ChequeService {
-	
-	public boolean addCheque(Cheque cheque);
 
-	public void validateCheques(List<Cheque> chequeList);
+	public void validateCheques(List<Cheque> chequeList) throws DuplicateChequeException;
 	
 	public List<Cheque> getAllCheques();
 	

@@ -1,5 +1,7 @@
 package com.iispl.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,47 +11,79 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.iispl.enums.ChequeStatus;
+import com.iispl.exceptions.AccountNotFoundException;
+import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.repository.ChequeRepository;
+import com.iispl.validations.ChequeNumberValidation;
+import com.iispl.validations.ChequeValidator;
 
 public class ChequeServiceImpl implements ChequeService {
 	
 	ChequeRepository chequeRepository = new ChequeRepository();
-	Set<Cheque> chequeSet = null;
+	Set<Cheque> chequeSet = new TreeSet<Cheque>(Comparator.comparing(Cheque::getChequeAmount).thenComparing(Cheque::getChequeNumber, Comparator.reverseOrder()));
     Set<String> chequeNumberSet = null;
     Map<String, Integer> branchCountMap = null;
     Queue<Cheque> chequeQueue = null;
     AccountService accountService = new AccountServiceImpl();
-//    List<E>
+    List<ChequeValidator> validationRules = null;
+    
+    public ChequeServiceImpl() {
+    	validationRules = new ArrayList<ChequeValidator>();
+    	
+    	validationRules.add(new ChequeNumberValidation());
+    }
 
 	@Override
-	public void validateCheques(List<Cheque> chequeList) {
-		chequeList.forEach(cheque -> {
-			Account account = accountService.searchAccount(cheque.getAccountNumber());
-			accountService.validateAccount(account);
-			
-			
-			
-		});
-		// TODO Auto-generated method stub
-		
-	}
+	public void validateCheques(List<Cheque> chequeList) throws DuplicateChequeException {
+		for(Cheque cheque : chequeList) {
 
-	@Override
-	public boolean addCheque(Cheque cheque) {
-		chequeSet = new TreeSet<Cheque>();
+			try {
+				Account account = accountService.searchAccount(cheque.getAccountNumber());
+				int errorCode = accountService.validateAccount(account);
+				
+				if(errorCode == 0) {
+					if(addChequeNumber(cheque.getChequeNumber())) {
+						
+						for(ChequeValidator rule : validationRules) {
+							if(!rule.validate(cheque)) {
+								if(rule instanceof ChequeNumberValidation) {
+									cheque.setChequeStatus(ChequeStatus.REJECTED_CHEQUE_AMOUNT_INVALID);
+								}
+							} else {
+								cheque.setChequeStatus(ChequeStatus.ACCEPTED);
+							}
+						}
+						
+					} else {
+						
+						cheque.setChequeStatus(ChequeStatus.REJECTED_DUPLICATE_CHEQUE_NUMBER);
+						throw new DuplicateChequeException();
+						
+					}
+				} else if(errorCode == 1) {
+					cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_NOT_FOUND);
+				} else {
+					cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_INACTIVE);
+				}
+				
+			} catch(AccountNotFoundException exception) {
+				cheque.setChequeStatus(ChequeStatus.REJECTED_ACCOUNT_NOT_FOUND);
+				exception.getMessage();
+			}
+			
+			chequeSet.add(cheque);
+				
+		}
 		
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
 	public boolean addChequeNumber(String chequeNumber) {
 		chequeNumberSet = new HashSet<String>(); 
-		
-		// TODO Auto-generated method stub
-		return false;
+		return chequeNumberSet.add(chequeNumber);
 	}
 
 	@Override

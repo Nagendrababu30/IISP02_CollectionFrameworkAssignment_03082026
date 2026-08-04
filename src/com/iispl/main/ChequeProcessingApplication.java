@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.iispl.exceptions.AccountNotFoundException;
+import com.iispl.exceptions.DuplicateChequeException;
 import com.iispl.model.Account;
 import com.iispl.model.Cheque;
 import com.iispl.service.AccountService;
@@ -23,7 +25,11 @@ public class ChequeProcessingApplication {
 		List<Account> accountList = accountService.getAllAccounts();
 		accountService.loadAllAccounts(accountList);
 		List<Cheque> chequeList = chequeService.getAllCheques();
-		chequeService.validateCheques(chequeList);
+		try {
+			chequeService.validateCheques(chequeList);
+		}catch(DuplicateChequeException exception) {
+			exception.getMessage();
+		}
 		
 	}
 	
