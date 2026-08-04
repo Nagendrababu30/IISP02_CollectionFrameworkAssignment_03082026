@@ -33,6 +33,19 @@ public class ChequeProcessingApplication {
 		
 	}
 	
+	private void printMenu() {
+		System.out.println();
+	}
+	
+	private String getchequNumber() {
+		System.out.println("Enter Cheque Number");
+		return scanner.nextLine();
+	}
+	private String getAccountNumber() {
+		System.out.println("Enter Account Number");
+		return scanner.nextLine();
+	}
+	
 	private void displayProcessedCheques() {
 		Set<Cheque> processedcheques=chequeService.displayProcessedCheques();
 		for(Cheque cheque:processedcheques) {
@@ -51,9 +64,8 @@ public class ChequeProcessingApplication {
 	}
 	
 
-	private void removeProcessedCheque() {
-		System.out.println("Enter Cheque Number : ");
-		boolean isdeleted=chequeService.removeProcessedCheque(scanner.nextLine());
+	private void removeProcessedCheque(String ChequeNumber) {
+		boolean isdeleted=chequeService.removeProcessedCheque(ChequeNumber);
 		if(isdeleted) {
 			System.out.println("Removed cheque from processed cheque List");
 		}else {
