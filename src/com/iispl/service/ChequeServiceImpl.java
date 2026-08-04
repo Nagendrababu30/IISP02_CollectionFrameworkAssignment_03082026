@@ -80,9 +80,7 @@ public class ChequeServiceImpl implements ChequeService {
 	@Override
 	public boolean addChequeNumber(String chequeNumber) {
 		chequeNumberSet = new HashSet<String>(); 
-		
-		// TODO Auto-generated method stub
-		return false;
+		return chequeNumberSet.add(chequeNumber);
 	}
 
 	@Override
