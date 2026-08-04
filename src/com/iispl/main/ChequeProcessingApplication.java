@@ -22,7 +22,8 @@ public class ChequeProcessingApplication {
 	static Scanner scanner=new Scanner(System.in);
 
 	public static void main(String[] args) {
-		
+
+	    System.out.println("========== Bank Management System =========="+"\n");
 		List<Account> accountList = accountService.getAllAccounts();
 		accountService.loadAllAccounts(accountList);
 		List<Cheque> chequeList = chequeService.getAllCheques();
@@ -82,7 +83,16 @@ public class ChequeProcessingApplication {
 	}
 	
 	private static void printMenu() {
-		System.out.println();
+		System.out.println("**********  MENU  ************");
+	    System.out.println("1. Branch Report");
+	    System.out.println("2. Display Processed Cheques");
+	    System.out.println("3. Remove Processed Cheque");
+	    System.out.println("4. Display All Accounts");
+	    System.out.println("5. Search Account");
+	    System.out.println("6. Delete Account");
+	    System.out.println("7. Update Account Balance");
+	    System.out.println("8. Exit");
+	    System.out.print("Enter your choice: ");
 	}
 	
 	private static BigDecimal getAmount() {
