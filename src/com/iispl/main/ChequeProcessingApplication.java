@@ -32,29 +32,84 @@ public class ChequeProcessingApplication {
 			exception.getMessage();
 		}
 		
+		
+		do {
+			printMenu();
+			
+			int choice = scanner.nextInt();
+			scanner.nextLine();
+			
+			switch(choice) {
+			
+				case 1:
+					getBranchReport();
+					break;
+					
+				case 2:
+					displayProcessedCheques();
+					break;
+					
+				case 3:
+					removeProcessedCheque(getChequeNumber());
+					break;
+					
+				case 4:
+					displayAllAccounts();
+					break;
+					
+				case 5:
+					searchAccount(getAccountNumber());
+					break;
+					
+				case 6:
+					deleteAccount(getAccountNumber());
+					break;
+					
+				case 7:
+					updateBalance(getAccountNumber(), getAmount());
+					break;
+					
+				case 8:
+					return;
+				
+				default :
+					System.out.println("Invalid Choice.");
+			
+			}
+			
+		} while(true);
+		
 	}
 	
-	private void printMenu() {
+	private static void printMenu() {
 		System.out.println();
 	}
 	
-	private String getchequNumber() {
+	private static BigDecimal getAmount() {
+		System.out.println("Enter amount : ");
+		BigDecimal amount=scanner.nextBigDecimal();
+		scanner.nextLine();
+		return amount;
+	}
+	
+	private static String getChequeNumber() {
 		System.out.println("Enter Cheque Number");
 		return scanner.nextLine();
 	}
-	private String getAccountNumber() {
+	
+	private static String getAccountNumber() {
 		System.out.println("Enter Account Number");
 		return scanner.nextLine();
 	}
 	
-	private void displayProcessedCheques() {
+	private static void displayProcessedCheques() {
 		Set<Cheque> processedcheques=chequeService.displayProcessedCheques();
 		for(Cheque cheque:processedcheques) {
 			System.out.println(cheque);
 		}
 	}
 	
-	private void getBranchReport() {
+	private static void getBranchReport() {
 		Map<String,Integer> branchreports=chequeService.getBranchReport();
 		
 		System.out.println("Branch name\t\t Processed_Cheques");
@@ -65,7 +120,7 @@ public class ChequeProcessingApplication {
 	}
 	
 
-	private void removeProcessedCheque(String ChequeNumber) {
+	private static void removeProcessedCheque(String ChequeNumber) {
 		boolean isdeleted=chequeService.removeProcessedCheque(ChequeNumber);
 		if(isdeleted) {
 			System.out.println("Removed cheque from processed cheque List");
@@ -74,7 +129,7 @@ public class ChequeProcessingApplication {
 		}
 	}
 	
-	private void searchAccount(String accountNnumber) {
+	private static void searchAccount(String accountNnumber) {
 		try {
 			Account account=accountService.searchAccount(accountNnumber);
 			System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
@@ -94,14 +149,24 @@ public class ChequeProcessingApplication {
 		else {
 			System.out.println("balance not updated");
 		}
-		
+
+	private static void displayAllAccounts() {
+		Map<String,Account> accountMap =accountService.displayAllAccount();
+		System.out.println("AccountNumber\t\tAccountBlance\t\tAccountStatus");
+		accountMap.forEach((accountNumber,account)->{
+			System.out.println(account.getAccountNumber() + "\t\t"+ account.getAccountBalance() + "\t\t"+account.getAccountStatus());
+		});
+
 	}
 	
-	private void displayAllAccounts() {
+	private static void deleteAccount(String accountNumber) {
+		boolean isDeleted = accountService.deleteAccount(accountNumber);
+	    if (isDeleted) {
+	        System.out.println("Account deleted successfully.");
+	    } else {
+	        System.out.println("Account not found.");
+	    }
 		
-	}
-	
-	private void deleteAccount(String accountNumber) {
 		
 	}
 	
