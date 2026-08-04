@@ -71,10 +71,17 @@ public class ChequeProcessingApplication {
 	}
 	
 	private void displayAllAccounts() {
-		
+			
 	}
 	
 	private void deleteAccount(String accountNumber) {
+		boolean isDeleted = accountService.deleteAccount(accountNumber);
+	    if (isDeleted) {
+	        System.out.println("Account deleted successfully.");
+	    } else {
+	        System.out.println("Account not found.");
+	    }
+		
 		
 	}
 	
